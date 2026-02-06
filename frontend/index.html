@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Blood Donation Platform</title>
+
+<style>
+
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family: "Segoe UI", sans-serif;
+}
+
+body{
+ height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ background: linear-gradient(135deg,#8e0e00,#1f1c18);
+ color:white;
+}
+
+.container{
+ background: rgba(255,255,255,0.12);
+ padding:60px 70px;
+ border-radius:20px;
+ backdrop-filter: blur(15px);
+ box-shadow:0 0 40px rgba(0,0,0,0.6);
+ text-align:center;
+ width:420px;
+ animation:fadeIn 1.2s ease;
+}
+
+@keyframes fadeIn{
+ from{opacity:0; transform:translateY(30px);}
+ to{opacity:1; transform:translateY(0);}
+}
+
+h1{
+ font-size:34px;
+ margin-bottom:10px;
+}
+
+p{
+ color:#ddd;
+ margin-bottom:40px;
+}
+
+.buttons{
+ display:flex;
+ flex-direction:column;
+ gap:20px;
+}
+
+button{
+ padding:15px;
+ font-size:18px;
+ border:none;
+ border-radius:30px;
+ cursor:pointer;
+ background:linear-gradient(45deg,#ff512f,#dd2476);
+ color:white;
+ transition:0.3s;
+ letter-spacing:1px;
+}
+
+button:hover{
+ transform:scale(1.05);
+ box-shadow:0 0 15px #ff4b2b;
+}
+
+.footer{
+ margin-top:40px;
+ font-size:13px;
+ color:#ccc;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🩸Blood Management System🩸</h1>
+<p>Choose Your Preference</p>
+
+<div class="buttons">
+ <button onclick="location.href='register.html'">Donor</button>
+ <button onclick="alert('Hospital Module Coming Soon')">Hospital Management</button>
+ <button onclick="alert('Blood Bank Module Coming Soon')">Blood Branch</button>
+</div>
+
+<div class="footer">
+ Saving Lives Together ❤️
+</div>
+
+</div>
+
+</body>
+</html>

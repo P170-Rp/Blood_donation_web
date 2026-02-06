@@ -1,42 +1,92 @@
+
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family:"Segoe UI",sans-serif;
+}
+
 body{
-    background:#f44336;
-    font-family: Arial;
+ height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ background:linear-gradient(135deg,#8e0e00,#1f1c18);
 }
 
 .container{
-    width:350px;
-    background:white;
-    padding:25px;
-    margin:80px auto;
-    border-radius:10px;
-    box-shadow:0px 0px 10px black;
+ width:420px;
+ background:rgba(255,255,255,0.12);
+ padding:40px;
+ border-radius:18px;
+ backdrop-filter:blur(15px);
+ box-shadow:0 0 40px rgba(0,0,0,0.6);
+ color:white;
+ animation:fade 1s ease;
+}
+
+@keyframes fade{
+ from{opacity:0; transform:translateY(30px);}
+ to{opacity:1; transform:translateY(0);}
 }
 
 h2{
-    text-align:center;
+ text-align:center;
+ margin-bottom:25px;
+ letter-spacing:1px;
 }
 
-input,select,button{
-    width:100%;
-    padding:10px;
-    margin-top:10px;
-    border-radius:5px;
-    border:1px solid gray;
+input,select{
+ width:100%;
+ padding:12px;
+ margin:10px 0;
+ border:none;
+ border-radius:8px;
+ background:rgba(255,255,255,0.85);
+ font-size:15px;
+ outline:none;
+}
+
+input:focus,select:focus{
+ box-shadow:0 0 8px #ff4b2b;
 }
 
 button{
-    background:#e53935;
-    color:white;
-    font-size:16px;
-    border:none;
-    cursor:pointer;
+ width:100%;
+ padding:13px;
+ margin-top:15px;
+ background:linear-gradient(45deg,#ff512f,#dd2476);
+ border:none;
+ color:white;
+ font-size:17px;
+ border-radius:25px;
+ cursor:pointer;
+ transition:0.3s;
 }
 
 button:hover{
-    background:#c62828;
+ transform:scale(1.04);
+ box-shadow:0 0 15px #ff4b2b;
+}
+
+.login-text{
+ margin-top:15px;
+ text-align:center;
+ font-size:14px;
+}
+
+.login-text a{
+ color:#ffb3b3;
+ text-decoration:none;
+ font-weight:bold;
+}
+
+.login-text a:hover{
+ text-decoration:underline;
 }
 
 #msg{
-    text-align:center;
-    margin-top:10px;
+ margin-top:12px;
+ text-align:center;
+ font-weight:bold;
 }

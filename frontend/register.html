@@ -1,51 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Blood Donation | Register</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Register | Blood Donation</title>
 </head>
+
 <body>
 
 <div class="container">
-    <h2>User Registration</h2>
 
-    <form id="registerForm">
-        
-        <input type="text" id="username" placeholder="Username" required>
+<h2>Create Donor Account</h2>
 
-        <input type="password" id="password" placeholder="Password" required>
+<form id="registerForm">
 
-        <input type="text" id="name" placeholder="Full Name" required>
+<input type="text" id="username" placeholder="Username" required>
+<input type="password" id="password" placeholder="Password" required>
+<input type="text" id="name" placeholder="Full Name" required>
+<input type="text" id="phone" placeholder="Phone Number" required>
 
-        <input type="text" id="phone" placeholder="Phone Number" required>
+<select id="blood_group" required>
+<option value="">Select Blood Group</option>
+<option>A+</option>
+<option>A-</option>
+<option>B+</option>
+<option>B-</option>
+<option>AB+</option>
+<option>AB-</option>
+<option>O+</option>
+<option>O-</option>
+</select>
 
+<input type="number" id="age" placeholder="Age" required>
+<input type="text" id="city" placeholder="City" required>
 
+<button type="submit">Register</button>
 
-        <select id="blood_group" required>
-            <option value="">Select Blood Group</option>
-            <option>A+</option>
-            <option>A-</option>
-            <option>B+</option>
-            <option>B-</option>
-            <option>AB+</option>
-            <option>AB-</option>
-            <option>O+</option>
-            <option>O-</option>
-        </select>
+<p class="login-text">
+ Already have an account? <a href="login.html">Login</a>
+</p>
 
-        <input type="number" id="age" placeholder="Age" required>
-
-        <input type="text" id="city" placeholder="City" required>
-
-        <button type="submit">Register</button>
-        <p class="login-text">
-            Already have an account? 
-            <a href="login.html">Login</a>
-        </p>
-
-        <p id="msg"></p>
+<p id="msg"></p>
 
     </form>
 </div>
+<script>
+document.getElementById("registerForm").addEventListener("submit", async function(e){
+ e.preventDefault();
+
+ const data={
+  username:document.getElementById("username").value,
+  password:document.getElementById("password").value,
+  name:document.getElementById("name").value,
+  phone:document.getElementById("phone").value,
+  blood_group:document.getElementById("blood_group").value,
+  age:document.getElementById("age").value,
+  city:document.getElementById("city").value
+ };
+
+ try{
+   const res = await fetch("/auth/register",{
+     method:"POST",
+     headers:{"Content-Type":"application/json"},
+     body:JSON.stringify(data)
+   });
+
+   const result = await res.json();
+   console.log(result);
+
+   document.getElementById("msg").innerText=result.message;
+
+   if(result.status==="success"){
+     setTimeout(()=>{
+       window.location.href="login.html";
+     },1000);
+   }
+
+ }catch(err){
+   console.log(err);
+   document.getElementById("msg").innerText="Server Error";
+ }
+});
+</script>
+
+
 </body>
 </html>
