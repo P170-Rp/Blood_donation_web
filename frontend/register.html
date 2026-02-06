@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blood Donation | Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>User Registration</h2>
+
+    <form id="registerForm">
+        
+        <input type="text" id="username" placeholder="Username" required>
+
+        <input type="password" id="password" placeholder="Password" required>
+
+        <input type="text" id="name" placeholder="Full Name" required>
+
+        <input type="text" id="phone" placeholder="Phone Number" required>
+
+
+
+        <select id="blood_group" required>
+            <option value="">Select Blood Group</option>
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+            <option>O+</option>
+            <option>O-</option>
+        </select>
+
+        <input type="number" id="age" placeholder="Age" required>
+
+        <input type="text" id="city" placeholder="City" required>
+
+        <button type="submit">Register</button>
+        <p class="login-text">
+            Already have an account? 
+            <a href="login.html">Login</a>
+        </p>
+
+        <p id="msg"></p>
+
+    </form>
+</div>
+</body>
+</html>
