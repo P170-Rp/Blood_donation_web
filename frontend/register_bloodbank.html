@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blood Bank Registration</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    *{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family:"Segoe UI",sans-serif;
+}
+
+body{
+ height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ background:linear-gradient(135deg,#8e0e00,#1f1c18);
+}
+
+.container{
+ width:420px;
+ background:rgba(255,255,255,0.12);
+ padding:40px;
+ border-radius:18px;
+ backdrop-filter:blur(15px);
+ box-shadow:0 0 40px rgba(0,0,0,0.6);
+ color:white;
+ animation:fade 1s ease;
+}
+
+@keyframes fade{
+ from{opacity:0; transform:translateY(30px);}
+ to{opacity:1; transform:translateY(0);}
+}
+
+h2{
+ text-align:center;
+ margin-bottom:25px;
+ letter-spacing:1px;
+}
+
+input,select{
+ width:100%;
+ padding:12px;
+ margin:10px 0;
+ border:none;
+ border-radius:8px;
+ background:rgba(255,255,255,0.85);
+ font-size:15px;
+ outline:none;
+}
+
+input:focus,select:focus{
+ box-shadow:0 0 8px #ff4b2b;
+}
+
+button{
+ width:100%;
+ padding:13px;
+ margin-top:15px;
+ background:linear-gradient(45deg,#ff512f,#dd2476);
+ border:none;
+ color:white;
+ font-size:17px;
+ border-radius:25px;
+ cursor:pointer;
+ transition:0.3s;
+}
+
+button:hover{
+ transform:scale(1.04);
+ box-shadow:0 0 15px #ff4b2b;
+}
+
+.login-text{
+ margin-top:15px;
+ text-align:center;
+ font-size:14px;
+}
+
+.login-text a{
+ color:#ffb3b3;
+ text-decoration:none;
+ font-weight:bold;
+}
+
+.login-text a:hover{
+ text-decoration:underline;
+}
+
+#msg{
+ margin-top:12px;
+ text-align:center;
+ font-weight:bold;
+}
+  </style>
+</head>
+<body>
+
+<div class="register-box">
+  <h3 class="text-center text-danger mb-4">🩸 Blood Bank Registration</h3>
+
+  <form id="bloodBankForm">
+    
+    <div class="mb-3">
+      <label class="form-label">Blood Bank Name</label>
+      <input type="text" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Registration Number</label>
+      <input type="text" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Mobile Number</label>
+      <input type="tel" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">City</label>
+      <input type="text" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">State</label>
+      <input type="text" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-control" required>
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label">Confirm Password</label>
+      <input type="password" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-danger w-100">Register</button>
+    <p class="login-text">
+ Already have an account? <a href="login_bloodbank.html">Login</a>
+</p>
+
+  </form>
+
+</div>
+
+</body>
+<script>
+document.getElementById("bloodBankForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const data = {
+    name: this[0].value,
+    reg_number: this[1].value,
+    email: this[2].value,
+    mobile: this[3].value,
+    city: this[4].value,
+    state: this[5].value,
+    password: this[6].value
+  };
+
+  const res = await fetch("http://localhost:3000/auth/bloodbank/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+  alert(result.message);
+});
+</script>
+
+
+</html>
