@@ -2,68 +2,90 @@ const router = require("express").Router();
 const db = require("../db");
 const bcrypt = require("bcryptjs");
 
-router.post("/register",(req,res)=>{
+/* ================= REGISTER ================= */
+router.post("/register", async (req, res) => {
 
- console.log("BODY:",req.body);
+ console.log("REGISTER BODY:", req.body);
 
- const {username,password,name,phone,blood_group,age,city}=req.body;
+  const { username, password, name, phone, blood_group, age, city } = req.body;
 
- if(!username || !password){
-   return res.json({status:"error",message:"Missing Fields"});
- }
-
- db.query(
-  "INSERT INTO users(username,password,name,phone,blood_group,age,city) VALUES(?,?,?,?,?,?,?)",
-  [username,password,name,phone,blood_group,age,city],
-  (err,result)=>{
-    if(err){
-      console.log("DB ERROR:",err);
-      return res.json({status:"error",message:"Database Error"});
-    }
-
-    res.json({status:"success",message:"Registered Successfully"});
+  if (!username || !password) {
+    return res.json({ status: "error", message: "Missing Fields" });
   }
- );
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    db.query(
+      "INSERT INTO users(username,password,name,phone,blood_group,age,city) VALUES(?,?,?,?,?,?,?)",
+      [username, hashedPassword, name, phone, blood_group, age, city],
+      (err, result) => {
+
+        if (err) {
+          console.log("REGISTER DB ERROR:", err);
+          return res.json({ status: "error", message: "Database Error" });
+        }
+
+        res.json({ status: "success", message: "Registered Successfully" });
+      }
+    );
+
+  } catch (err) {
+    console.log(err);
+    res.json({ status: "error", message: "Server Error" });
+  }
 });
 
-module.exports = router;
 
-// LOGIN
-router.post("/login", (req,res)=>{
+/* ================= LOGIN ================= */
+router.post("/login", (req, res) => {
 
- console.log("LOGIN BODY:", req.body);
+  console.log("LOGIN BODY:", req.body);
 
- const { username, password } = req.body;
+  const { username, password } = req.body;
 
- if(!username || !password){
-   return res.json({status:"error", message:"Missing Fields"});
- }
+  if (!username || !password) {
+    return res.json({ status: "error", message: "Missing Fields" });
+  }
 
- db.query(
-   "SELECT * FROM users WHERE username=? AND password=?",
-   [username, password],
-   (err, result) => {
+  db.query(
+    "SELECT * FROM users WHERE username=?",
+    [username],
+    async (err, result) => {
 
-     if(err){
-       console.log("LOGIN DB ERROR:", err);
-       return res.json({status:"error", message:"Database Error"});
-     }
+      if (err) {
+        console.log("LOGIN DB ERROR:", err);
+        return res.json({ status: "error", message: "Database Error" });
+      }
 
-     if(result.length > 0){
-       res.json({
-         status:"success",
-         message:"Login Successful",
-         user: result[0]
-       });
-     } else {
-       res.json({
-         status:"fail",
-         message:"Invalid Username or Password"
-       });
-     }
-   }
- );
+      if (result.length === 0) {
+        return res.json({ status: "fail", message: "Invalid Username or Password" });
+      }
+
+      const user = result[0];
+
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+        return res.json({ status: "fail", message: "Invalid Username or Password" });
+      }
+
+      res.json({
+        status: "success",
+        message: "Login Successful",
+        user_id: user.id,
+        user: {
+          name: user.name,
+          blood_group: user.blood_group,
+          city: user.city
+        }
+      });
+    }
+  );
 });
+
+
+
 
 // 🩸 BLOOD BANK REGISTER
 router.post("/bloodbank/register", (req, res) => {
@@ -144,3 +166,5 @@ router.post("/bloodbank/login", (req, res) => {
     }
   );
 });
+
+module.exports = router;
